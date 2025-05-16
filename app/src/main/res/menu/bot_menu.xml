@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="ExtraText">
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mnu_home"
+        android:icon="@drawable/homeicon1"
+        android:title="Trang Chủ" />
+    <item
+        android:id="@+id/mnu_saved"
+        android:icon="@drawable/saveicon2"
+        android:title="Đã Lưu" />
+    <item
+        android:id="@+id/mnu_genre"
+        android:icon="@drawable/genreicon3"
+        android:title="Thể Loại" />
+</menu>
