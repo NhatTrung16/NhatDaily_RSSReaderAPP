@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomSearchView" parent="Widget.AppCompat.SearchView">
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:queryHint">"Tìm kiếm..."</item>
+    </style>
+</resources>

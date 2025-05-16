@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+<!--    màu bg của logo -->
+    <color name="xanhNAVY">#002868</color>
 </resources>
