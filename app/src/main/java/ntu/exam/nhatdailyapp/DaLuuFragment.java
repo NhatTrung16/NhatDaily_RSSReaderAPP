@@ -22,7 +22,6 @@ public class DaLuuFragment extends Fragment {
     RecyclerView recyclerView;
     ArticleAdapter adapter;
 
-
     public DaLuuFragment() {}
 
     public void filterArticles(String query) {
