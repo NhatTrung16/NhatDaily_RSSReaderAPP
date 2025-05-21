@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         TimDieuKhien();
         FragmentManager fragmentManager = getSupportFragmentManager();
         bottomNav = findViewById(R.id.bottomNav);
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return false;
             }
+
         });
+
     }
 }

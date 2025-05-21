@@ -14,10 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder> {
+    private static final String TAG = "ArticleAdapter";
     Context context;
     ArrayList<Article> articles;
 
@@ -36,31 +39,43 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
     @Override
     public void onBindViewHolder(@NonNull ArticleViewHolder holder, int position) {
         Article article = articles.get(position);
-        Log.d("ArticleAdapter", "Image URL: " + article.getImageUrl());
+
+        // Ghi log để debug
+        Log.d(TAG, "Vị trí: " + position);
+        Log.d(TAG, "Tiêu đề: " + article.getTitle());
+        Log.d(TAG, "URL hình ảnh: " + article.getImageUrl());
+
+        // Hiển thị tiêu đề và ngày
         holder.titleText.setText(article.getTitle());
         holder.dateText.setText(article.getPubDate());
 
+        // Xử lý hiển thị hình ảnh
         String imageUrl = article.getImageUrl();
         if (imageUrl != null && !imageUrl.isEmpty()) {
-            Glide.with(context)
-                    .load(imageUrl)
+            Log.d(TAG, "Đang tải hình ảnh từ: " + imageUrl);
+
+            // Thêm các tùy chọn để cải thiện việc tải hình ảnh
+            RequestOptions options = new RequestOptions()
                     .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.placeholder)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL);
+
+            // Tải hình ảnh với Glide
+            Glide.with(context.getApplicationContext())
+                    .load(imageUrl)
+                    .apply(options)
                     .into(holder.imageView);
         } else {
+            Log.d(TAG, "Không có URL hình ảnh, sử dụng placeholder");
             holder.imageView.setImageResource(R.drawable.placeholder);
         }
 
+        // Thiết lập sự kiện click để mở bài báo
         holder.itemView.setOnClickListener(v -> {
-            // Mở bài báo khi click
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(article.getLink()));
-            context.startActivity(i);
+            Intent intent = new Intent(context, ArticleDetail_Activity.class);
+            intent.putExtra("link", article.getLink());
+            context.startActivity(intent);
         });
-        Glide.with(context)
-                .load(article.getImageUrl())
-                .placeholder(R.drawable.placeholder) // tạo sẵn ảnh "placeholder" nếu muốn
-                .into(holder.imageView);
-
     }
 
     @Override
@@ -68,7 +83,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
         return articles.size();
     }
 
-    class ArticleViewHolder extends RecyclerView.ViewHolder {
+    static class ArticleViewHolder extends RecyclerView.ViewHolder {
         TextView titleText, dateText;
         ImageView imageView;
 
@@ -80,4 +95,3 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
         }
     }
 }
-
