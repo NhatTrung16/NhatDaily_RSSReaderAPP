@@ -24,7 +24,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:ellipsize="end"
-        android:maxLines="4"
+        android:maxLines="5"
         android:text="Tiêu đề"
         android:textAlignment="viewStart"
         android:textSize="20sp"

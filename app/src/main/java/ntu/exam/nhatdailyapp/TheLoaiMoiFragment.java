@@ -28,7 +28,6 @@ public class TheLoaiMoiFragment extends Fragment {
     // ArticleAdapter articleAdapter; // Không cần khởi tạo ở đây nếu ReadRSS tự thiết lập
     ArrayList<Article> articles;
     ImageButton ibtnBack;
-    ImageButton ibtnSave;
 
     // Factory method để tạo instance của Fragment và truyền dữ liệu
     public static TheLoaiMoiFragment newInstance(String rssFeedUrl, String title) {
@@ -56,7 +55,6 @@ public class TheLoaiMoiFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_the_loai_moi, container, false);
 
         ibtnBack = view.findViewById(R.id.ibtnBack);
-        ibtnSave = view.findViewById(R.id.ibtnSave);
 
         // Thiết lập sự kiện click cho nút Back
         ibtnBack.setOnClickListener(v -> {
@@ -65,13 +63,6 @@ public class TheLoaiMoiFragment extends Fragment {
                 // và MainActivity có thể xử lý việc hiển thị lại Top Bar
                 getParentFragmentManager().popBackStack();
             }
-        });
-
-        // Thiết lập sự kiện click cho nút Save
-        ibtnSave.setOnClickListener(v -> {
-            // TODO: Triển khai logic lưu bài báo ở đây
-            Log.d(TAG, "Nút Save được nhấn. Logic lưu sẽ được thực hiện tại đây.");
-            Toast.makeText(getContext(), "Chức năng lưu sẽ được triển khai!", Toast.LENGTH_SHORT).show();
         });
 
         return view;

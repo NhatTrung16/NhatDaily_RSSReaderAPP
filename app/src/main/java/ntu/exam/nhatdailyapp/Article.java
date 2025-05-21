@@ -1,6 +1,6 @@
 package ntu.exam.nhatdailyapp;
-
-public class Article {
+import java.io.Serializable;
+public class Article implements Serializable {
     String title;
     String link;
     String pubDate;
@@ -17,4 +17,17 @@ public class Article {
     public String getLink() { return link; }
     public String getPubDate() { return pubDate; }
     public String getImageUrl() { return imageUrl; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Article article = (Article) o;
+        return link.equals(article.link); // So sánh dựa trên link là đủ vì link là duy nhất
+    }
+
+    @Override
+    public int hashCode() {
+        return link.hashCode();
+    }
 }

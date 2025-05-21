@@ -119,7 +119,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
         // CLick bài báo thì intent qua detail
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ArticleDetail_Activity.class);
-            intent.putExtra("link", article.getLink());
+            // Thay vì chỉ truyền link, truyền toàn bộ đối tượng Article
+            intent.putExtra("article", article); // Key là "article"
             context.startActivity(intent);
         });
     }
