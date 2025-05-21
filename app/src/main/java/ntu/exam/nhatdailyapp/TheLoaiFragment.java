@@ -38,17 +38,16 @@ public class TheLoaiFragment extends Fragment implements TheLoaiAdapter.OnTheLoa
 
         theLoaiList = new ArrayList<>();
 
-        theLoaiList.add(new TheLoai("Thời sự", R.drawable.ic_thoisu, "https://vnexpress.net/rss/thoi-su.rss"));
-        theLoaiList.add(new TheLoai("Thế giới", R.drawable.ic_thegioi, "https://vnexpress.net/rss/the-gioi.rss"));
-        theLoaiList.add(new TheLoai("Kinh doanh", R.drawable.ic_kinhdoanh, "https://vnexpress.net/rss/kinh-doanh.rss"));
-        theLoaiList.add(new TheLoai("Khoa học", R.drawable.ic_khoahoc, "https://vnexpress.net/rss/khoa-hoc.rss"));
-        theLoaiList.add(new TheLoai("Giải trí", R.drawable.ic_giaitri, "https://vnexpress.net/rss/giai-tri.rss"));
-        theLoaiList.add(new TheLoai("Thể thao", R.drawable.ic_thethao, "https://vnexpress.net/rss/the-thao.rss"));
-        theLoaiList.add(new TheLoai("Pháp luật", R.drawable.ic_phapluat, "https://vnexpress.net/rss/phap-luat.rss"));
-        theLoaiList.add(new TheLoai("Giáo dục", R.drawable.ic_giaoduc, "https://vnexpress.net/rss/giao-duc.rss"));
-        theLoaiList.add(new TheLoai("Sức khỏe", R.drawable.ic_suckhoe, "https://vnexpress.net/rss/suc-khoe.rss"));
-        theLoaiList.add(new TheLoai("Đời sống", R.drawable.ic_doisong, "https://vnexpress.net/rss/doi-song.rss"));
-        // ... Thêm các thể loại khác của bạn vào đây
+        theLoaiList.add(new TheLoai("Thế Giới", R.drawable.ic_thegioi, "https://vnexpress.net/rss/the-gioi.rss"));
+        theLoaiList.add(new TheLoai("Kinh Doanh", R.drawable.ic_kinhdoanh, "https://vnexpress.net/rss/kinh-doanh.rss"));
+        theLoaiList.add(new TheLoai("Khoa Học", R.drawable.ic_khoahoc, "https://vnexpress.net/rss/khoa-hoc.rss"));
+        theLoaiList.add(new TheLoai("Giải Trí", R.drawable.ic_giaitri, "https://vnexpress.net/rss/giai-tri.rss"));
+        theLoaiList.add(new TheLoai("Thể Thao", R.drawable.ic_thethao, "https://vnexpress.net/rss/the-thao.rss"));
+        theLoaiList.add(new TheLoai("Pháp Luật", R.drawable.ic_phapluat, "https://vnexpress.net/rss/phap-luat.rss"));
+        theLoaiList.add(new TheLoai("Giáo Dục", R.drawable.ic_giaoduc, "https://vnexpress.net/rss/giao-duc.rss"));
+        theLoaiList.add(new TheLoai("Sức Khỏe", R.drawable.ic_suckhoe, "https://vnexpress.net/rss/suc-khoe.rss"));
+        theLoaiList.add(new TheLoai("Đời Sống", R.drawable.ic_doisong, "https://vnexpress.net/rss/doi-song.rss"));
+        theLoaiList.add(new TheLoai("Du Lịch", R.drawable.ic_dulich, "https://vnexpress.net/rss/du-lich.rss"));
 
         theLoaiAdapter = new TheLoaiAdapter(getContext(), theLoaiList, this);
         recyclerViewTheLoai.setAdapter(theLoaiAdapter);
@@ -56,17 +55,11 @@ public class TheLoaiFragment extends Fragment implements TheLoaiAdapter.OnTheLoa
 
     @Override
     public void onTheLoaiClick(TheLoai theLoai) {
-        Toast.makeText(getContext(), "Bạn đã chọn: " + theLoai.getName() + "\nRSS Feed: " + theLoai.getRssFeedUrl(), Toast.LENGTH_SHORT).show();
+        // Tạo instance của TheLoaiMoiFragment
+        TheLoaiMoiFragment theLoaiMoiFragment = TheLoaiMoiFragment.newInstance(theLoai.getRssFeedUrl(), theLoai.getName());
 
-        // Ở đây, bạn sẽ thực hiện chuyển đổi Fragment để hiển thị danh sách bài báo của thể loại đã chọn.
-        // Ví dụ: TrangChuFragment newsListFragment = new TrangChuFragment();
-        // Bundle bundle = new Bundle();
-        // bundle.putString("rss_feed_url", theLoai.getRssFeedUrl());
-        // newsListFragment.setArguments(bundle);
-
-        // getParentFragmentManager().beginTransaction()
-        //      .replace(R.id.fragment_container, newsListFragment)
-        //      .addToBackStack(null)
-        //      .commit();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).replaceFragmentAndControlTopBar(theLoaiMoiFragment); // Đã sửa tên phương thức
+        }
     }
 }
