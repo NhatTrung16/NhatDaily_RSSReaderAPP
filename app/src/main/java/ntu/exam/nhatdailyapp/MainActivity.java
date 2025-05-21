@@ -1,9 +1,12 @@
 package ntu.exam.nhatdailyapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -21,10 +24,12 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
     LinearLayout mainTopBar;
+    SearchView searchView;
 
     void TimDieuKhien() {
         bottomNav = findViewById(R.id.bottomNav);
         mainTopBar = findViewById(R.id.linearLayout3);
+        searchView = findViewById(R.id.searchView);
     }
 
     @Override
@@ -40,6 +45,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
         TimDieuKhien();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d("MainActivity", "Search submitted: " + query);
+                handleSearch(query);
+                searchView.clearFocus(); // Ẩn bàn phím khi submit
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d("MainActivity", "Search text changed: " + newText);
+                handleSearch(newText);
+                return true;
+            }
+        });
 
         // Quản lý hiển thị TopBar khi fragment thay đổi
         getSupportFragmentManager().addOnBackStackChangedListener(this::updateTopBar);
@@ -110,4 +132,25 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
+    private void handleSearch(String query) {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
+        if (currentFragment instanceof TrangChuFragment) {
+            ((TrangChuFragment) currentFragment).filterArticles(query);
+        } else if (currentFragment instanceof DaLuuFragment) {
+            ((DaLuuFragment) currentFragment).filterArticles(query);
+        }
+    }
+
+    // Phương thức để reset SearchView từ Fragment
+    public void resetSearchView() {
+        searchView.setQuery("", false); // Xóa query text, false: không kích hoạt listener
+        searchView.clearFocus(); // Bỏ focus cho SearchView
+        // Ẩn bàn phím ảo
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (imm != null && getCurrentFocus() != null) {
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
 }

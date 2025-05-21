@@ -21,6 +21,7 @@ import java.text.ParseException; // Import này
 import java.text.SimpleDateFormat; // Import này
 import java.util.ArrayList;
 import java.util.Date; // Import này
+import java.util.List;
 import java.util.Locale; // Import này
 import java.util.concurrent.TimeUnit; // Import này
 import java.util.Calendar; // Import này để kiểm tra hôm qua/hôm nay
@@ -29,10 +30,39 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
     private static final String TAG = "ArticleAdapter";
     Context context;
     ArrayList<Article> articles;
+    ArrayList<Article> originalArticles;
 
     public ArticleAdapter(Context context, ArrayList<Article> articles) {
         this.context = context;
-        this.articles = articles;
+        this.articles = new ArrayList<>(articles);
+        this.originalArticles = new ArrayList<>(articles);
+    }
+    // Phương thức lọc dữ liệu
+    public void filter(String query) {
+        query = query.toLowerCase(Locale.getDefault());
+        articles.clear(); // Xóa tất cả các mục hiện có
+
+        if (query.isEmpty()) {
+            articles.addAll(originalArticles); // Nếu truy vấn rỗng, hiển thị lại tất cả bản gốc
+        } else {
+            // Lọc từ danh sách gốc
+            for (Article article : originalArticles) {
+                if (article.getTitle().toLowerCase(Locale.getDefault()).contains(query)) {
+                    articles.add(article);
+                }
+            }
+        }
+        notifyDataSetChanged(); // Thông báo cho RecyclerView cập nhật giao diện
+    }
+    // Phương thức để cập nhật toàn bộ dữ liệu trong adapter
+    public void updateData(List<Article> newArticles) { // Sử dụng List để linh hoạt hơn
+        articles.clear();
+        articles.addAll(newArticles); // Cập nhật danh sách hiển thị
+
+        originalArticles.clear();
+        originalArticles.addAll(newArticles); // Cập nhật danh sách gốc
+
+        notifyDataSetChanged(); // Thông báo cho RecyclerView cập nhật
     }
 
     @NonNull
@@ -169,4 +199,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
             imageView = itemView.findViewById(R.id.imageViewLand);
         }
     }
+
+
+
 }

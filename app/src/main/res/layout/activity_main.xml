@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!-- Thanh logo + tìm kiếm -->
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
@@ -43,7 +42,6 @@
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-    <!-- Fragment hiển thị nội dung -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
         android:name="ntu.exam.nhatdailyapp.TrangChuFragment"
@@ -54,7 +52,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- BottomNavigationView -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:padding="5dp"
