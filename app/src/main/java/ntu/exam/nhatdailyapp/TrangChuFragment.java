@@ -26,7 +26,7 @@ public class TrangChuFragment extends Fragment {
         rvArticles.setAdapter(new ArticleAdapter(getContext(), new ArrayList<>()));
 
         // Sau đó load dữ liệu
-        new ReadRSS(getContext(), rvArticles).execute("https://vnexpress.net/rss/the-gioi.rss");
+        new ReadRSS(getContext(), rvArticles).execute("https://vnexpress.net/rss/thoi-su.rss");
 
         return view;
     }

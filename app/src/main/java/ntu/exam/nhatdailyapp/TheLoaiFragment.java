@@ -1,64 +1,72 @@
 package ntu.exam.nhatdailyapp;
 
 import android.os.Bundle;
-
+import androidx.annotation.NonNull; // Import này cần thiết cho @NonNull
+import androidx.annotation.Nullable; // Import này cần thiết cho @Nullable
 import androidx.fragment.app.Fragment;
-
+import androidx.recyclerview.widget.GridLayoutManager; // Import này cần thiết cho GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView; // Import này cần thiết cho RecyclerView
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast; // Dùng tạm để test click
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TheLoaiFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class TheLoaiFragment extends Fragment {
+import java.util.ArrayList; // Import này cần thiết cho ArrayList
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class TheLoaiFragment extends Fragment implements TheLoaiAdapter.OnTheLoaiClickListener {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private RecyclerView recyclerViewTheLoai;
+    private TheLoaiAdapter theLoaiAdapter;
+    private ArrayList<TheLoai> theLoaiList;
 
     public TheLoaiFragment() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TheLoaiFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TheLoaiFragment newInstance(String param1, String param2) {
-        TheLoaiFragment fragment = new TheLoaiFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_the_loai, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        recyclerViewTheLoai = view.findViewById(R.id.recycler_view_the_loai);
+        recyclerViewTheLoai.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
+        theLoaiList = new ArrayList<>();
+
+        theLoaiList.add(new TheLoai("Thời sự", R.drawable.ic_thoisu, "https://vnexpress.net/rss/thoi-su.rss"));
+        theLoaiList.add(new TheLoai("Thế giới", R.drawable.ic_thegioi, "https://vnexpress.net/rss/the-gioi.rss"));
+        theLoaiList.add(new TheLoai("Kinh doanh", R.drawable.ic_kinhdoanh, "https://vnexpress.net/rss/kinh-doanh.rss"));
+        theLoaiList.add(new TheLoai("Khoa học", R.drawable.ic_khoahoc, "https://vnexpress.net/rss/khoa-hoc.rss"));
+        theLoaiList.add(new TheLoai("Giải trí", R.drawable.ic_giaitri, "https://vnexpress.net/rss/giai-tri.rss"));
+        theLoaiList.add(new TheLoai("Thể thao", R.drawable.ic_thethao, "https://vnexpress.net/rss/the-thao.rss"));
+        theLoaiList.add(new TheLoai("Pháp luật", R.drawable.ic_phapluat, "https://vnexpress.net/rss/phap-luat.rss"));
+        theLoaiList.add(new TheLoai("Giáo dục", R.drawable.ic_giaoduc, "https://vnexpress.net/rss/giao-duc.rss"));
+        theLoaiList.add(new TheLoai("Sức khỏe", R.drawable.ic_suckhoe, "https://vnexpress.net/rss/suc-khoe.rss"));
+        theLoaiList.add(new TheLoai("Đời sống", R.drawable.ic_doisong, "https://vnexpress.net/rss/doi-song.rss"));
+        // ... Thêm các thể loại khác của bạn vào đây
+
+        theLoaiAdapter = new TheLoaiAdapter(getContext(), theLoaiList, this);
+        recyclerViewTheLoai.setAdapter(theLoaiAdapter);
+    }
+
+    @Override
+    public void onTheLoaiClick(TheLoai theLoai) {
+        Toast.makeText(getContext(), "Bạn đã chọn: " + theLoai.getName() + "\nRSS Feed: " + theLoai.getRssFeedUrl(), Toast.LENGTH_SHORT).show();
+
+        // Ở đây, bạn sẽ thực hiện chuyển đổi Fragment để hiển thị danh sách bài báo của thể loại đã chọn.
+        // Ví dụ: TrangChuFragment newsListFragment = new TrangChuFragment();
+        // Bundle bundle = new Bundle();
+        // bundle.putString("rss_feed_url", theLoai.getRssFeedUrl());
+        // newsListFragment.setArguments(bundle);
+
+        // getParentFragmentManager().beginTransaction()
+        //      .replace(R.id.fragment_container, newsListFragment)
+        //      .addToBackStack(null)
+        //      .commit();
     }
 }
